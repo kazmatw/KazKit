@@ -22,16 +22,17 @@ function help_menu() {
     echo "Usage: kazkit <command>"
     echo ""
     echo "Commands:"
-    echo "  set <IP>     Set target IP"
-    echo "  quick        Quick Nmap scan (Top 1000 ports)"
-    echo "  full         Full TCP port scan"
-    echo "  detail       Detailed scan on open ports"
-    echo "  ftp          Download all files via FTP (anonymous login)"
-    echo "  all          Run all steps sequentially"
+    echo "  set <IP>       Set target IP"
+    echo "  quick          Quick Nmap scan (Top 1000 ports)"
+    echo "  full           Full TCP port scan"
+    echo "  detail         Detailed scan on open ports"
+    echo "  ftp            Download files via anonymous FTP"
+    echo "  listen [PORT]  Start reverse shell listener (default port 4444)"
     echo ""
-    echo "Example:"
+    echo "Examples:"
     echo "  kazkit set 10.10.10.10"
     echo "  kazkit quick"
+    echo "  kazkit listen 9001"
 }
 
 function get_ip() {
@@ -84,15 +85,14 @@ function ftp_check() {
     get_ip
     OUTPUT_DIR="recon_$IP"
     mkdir -p $OUTPUT_DIR
-    echo -e "${BLUE}[*] Download all files via FTP (anonymous login) on $IP...${NC}"
+    echo -e "${BLUE}[*] Downloading all files from FTP via anonymous login on $IP...${NC}"
     wget -r ftp://Anonymous:pass@$IP --timeout=10 --tries=1 -P $OUTPUT_DIR/ftp_download 2>/dev/null
 }
 
-function all_tasks() {
-    quick_scan
-    full_scan
-    detail_scan
-    ftp_check
+function start_listener() {
+    LPORT=${1:-4444}
+    echo -e "${BLUE}[*] Starting reverse shell listener on port $LPORT...${NC}"
+    sudo rlwrap nc -lvnp $LPORT
 }
 
 banner
@@ -113,8 +113,8 @@ case $1 in
     ftp)
         ftp_check
         ;;
-    all)
-        all_tasks
+    listen)
+        start_listener "$2"
         ;;
     *)
         help_menu

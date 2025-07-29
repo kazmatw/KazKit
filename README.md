@@ -11,6 +11,7 @@ KazKit is a simple offensive toolkit that automates basic reconnaissance tasks f
 - Detailed scan with default NSE scripts and service detection
 - Download all accessible files from FTP using anonymous login
 - Saves results in organized output folders
+- Start reverse shell listener with `rlwrap` and `nc`
 
 ---
 
