@@ -28,6 +28,7 @@ function help_menu() {
     echo "  detail         Detailed scan on open ports"
     echo "  ftp            Download files via anonymous FTP"
     echo "  listen [PORT]  Start reverse shell listener (default port 4444)"
+    echo "  flag           Print flag retrieval cheat sheet"
     echo ""
     echo "Examples:"
     echo "  kazkit set 10.10.10.10"
@@ -95,6 +96,23 @@ function start_listener() {
     sudo rlwrap nc -lvnp $LPORT
 }
 
+function flag_cheatsheet() {
+    echo -e "${BLUE}[*] Flag Retrieval Cheat Sheet:${NC}\n"
+
+    echo -e "${GREEN}Linux:${NC}"
+    echo "cat /root/proof.txt; cat /home/*/local.txt"
+    echo ""
+
+    echo -e "${GREEN}Windows (CMD):${NC}"
+    echo "type C:\\Users\\Administrator\\Desktop\\proof.txt && type C:\\Users\\*\\Desktop\\local.txt"
+    echo ""
+
+    echo -e "${GREEN}Windows (PowerShell):${NC}"
+    echo "type C:\\Users\\*\\Desktop\\local.txt; type C:\\Users\\Administrator\\Desktop\\proof.txt"
+    echo "# OR more generic search:"
+    echo "Get-ChildItem -Path C:\\Users -Recurse -Include local.txt,proof.txt 2>\$null | ForEach-Object { Get-Content \$_.FullName }"
+}
+
 banner
 
 case $1 in
@@ -115,6 +133,9 @@ case $1 in
         ;;
     listen)
         start_listener "$2"
+        ;;
+    flag)
+        flag_cheatsheet
         ;;
     *)
         help_menu
