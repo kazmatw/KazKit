@@ -70,7 +70,7 @@ function detail_scan() {
         echo -e "${RED}[!] Run 'full' first to get port list.${NC}"
         exit 1
     fi
-    PORTS=$(grep "^ [0-9]" $OUTPUT_DIR/full_scan.txt | cut -d'/' -f1 | tr '\n' ',' | sed 's/,$//')
+    PORTS=$(grep "^[0-9]" $OUTPUT_DIR/full_scan.txt | cut -d'/' -f1 | tr '\n' ',' | sed 's/,$//')
     if [ -z "$PORTS" ]; then
         echo -e "${RED}[!] No open ports found.${NC}"
         exit 1
