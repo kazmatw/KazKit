@@ -26,7 +26,7 @@ function help_menu() {
     echo "  quick        Quick Nmap scan (Top 1000 ports)"
     echo "  full         Full TCP port scan"
     echo "  detail       Detailed scan on open ports"
-    echo "  ftp          Anonymous FTP check"
+    echo "  ftp          Download all files via FTP (anonymous login)"
     echo "  all          Run all steps sequentially"
     echo ""
     echo "Example:"
@@ -84,7 +84,7 @@ function ftp_check() {
     get_ip
     OUTPUT_DIR="recon_$IP"
     mkdir -p $OUTPUT_DIR
-    echo -e "${BLUE}[*] Checking FTP anonymous access on $IP...${NC}"
+    echo -e "${BLUE}[*] Download all files via FTP (anonymous login) on $IP...${NC}"
     wget -r ftp://Anonymous:pass@$IP --timeout=10 --tries=1 -P $OUTPUT_DIR/ftp_download 2>/dev/null
 }
 

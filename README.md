@@ -9,7 +9,7 @@ KazKit is a simple offensive toolkit that automates basic reconnaissance tasks f
 - Quick Nmap scan (Top 1000 ports)
 - Full TCP port scan
 - Detailed scan with default NSE scripts and service detection
-- Anonymous FTP access check
+- Download all accessible files from FTP using anonymous login
 - Saves results in organized output folders
 
 ---
@@ -39,7 +39,7 @@ Then run any mode:
 kazkit quick     # Quick scan (Top 1000 ports)
 kazkit full      # Full TCP port scan
 kazkit detail    # Detailed scan on open ports (requires full scan first)
-kazkit ftp       # FTP anonymous access check
+kazkit ftp       # Download all files via FTP (anonymous login)
 kazkit all       # Run all steps sequentially
 ```
 
